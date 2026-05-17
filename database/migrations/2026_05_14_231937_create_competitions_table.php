@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('competitions', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->longText('description')->nullable();
+            $table->decimal('price', 12, 2)->default(0);
+            $table->enum('type', ['team', 'individual'])->default('team');
+            $table->string('guidebook')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
