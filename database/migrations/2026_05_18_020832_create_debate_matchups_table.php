@@ -10,15 +10,16 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('debate_motions', function (Blueprint $table) {
+        Schema::create('debate_matchups', function (Blueprint $table) {
             $table->id();
             $table->foreignId('competition_id')->constrained()->cascadeOnDelete();
-            $table->string('title');
-            $table->string('slug')->unique();
-            $table->longText('description')->nullable();
+            $table->foreignId('motion_id')->nullable()->constrained('debate_motions')->nullOnDelete();
+            $table->foreignId('team_a_id')->constrained('teams')->cascadeOnDelete();
+            $table->foreignId('team_b_id')->constrained('teams')->cascadeOnDelete();
             $table->enum('round', ['preliminary', 'quarter_final', 'semi_final', 'grand_final']);
-            $table->boolean('is_published')->default(false);
-            $table->timestamp('released_at')->nullable();
+            $table->enum('winner_side', ['team_a', 'team_b'])->nullable();
+            $table->dateTime('match_time')->nullable();
+            $table->string('zoom_link')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('debate_motions');
+        Schema::dropIfExists('debate_matchups');
     }
 };

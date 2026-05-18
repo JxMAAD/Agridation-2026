@@ -16,9 +16,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->longText('description')->nullable();
-            $table->decimal('price', 12, 2)->default(0);
             $table->enum('type', ['team', 'individual'])->default('team');
+            $table->decimal('price', 12, 2)->default(0);
+            $table->integer('max_member')->default(1);
             $table->string('guidebook')->nullable();
+            $table->string('thumbnail')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

@@ -4,23 +4,22 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('submission_stages', function (Blueprint $table) {
+        Schema::create('schedules', function (Blueprint $table) {
             $table->id();
             $table->foreignId('competition_id')->constrained()->cascadeOnDelete();
-            $table->string('name');
-            $table->string('slug')->unique();
+            $table->foreignId('team_id')->nullable()->constrained()->nullOnDelete();
+            $table->string('title');
             $table->text('description')->nullable();
-            $table->integer('order')->default(1);
-            $table->boolean('is_paid_stage')->default(false);
-            $table->boolean('is_active')->default(true);
-            $table->dateTime('deadline');
+            $table->dateTime('start_time');
+            $table->dateTime('end_time');
+            $table->string('location')->nullable();
+            $table->string('zoom_link')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('submission_stages');
+        Schema::dropIfExists('schedules');
     }
 };

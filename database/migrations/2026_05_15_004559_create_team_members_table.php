@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('team_members', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('team_id')->constrained()->cascadeOnDelete();
+            $table->string('name');
+            $table->string('nim')->unique();
+            $table->string('institution');
+            $table->string('faculty')->nullable();
+            $table->string('major')->nullable();
+            $table->string('phone', 20)->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
     }

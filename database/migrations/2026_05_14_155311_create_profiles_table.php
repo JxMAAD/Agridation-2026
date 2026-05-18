@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('nim')->unique();
             $table->date('birth_date');
-            $table->string('no_hp');
+            $table->string('phone', 20);
             $table->string('instagram');
             $table->string('institution');
             $table->string('faculty')->nullable();

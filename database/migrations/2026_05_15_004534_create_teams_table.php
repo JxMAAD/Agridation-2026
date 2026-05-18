@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('teams', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('competition_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('leader_id')->constrained('users')->cascadeOnDelete();
+            $table->string('team_name');
+            $table->boolean('is_finalized')->default(false);
+            $table->enum('status', ['pending', 'approved', 'rejected', 'finalist', 'winner'])->default('pending');
             $table->timestamps();
         });
     }

@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('competition_themes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('competition_id')->constrained()->cascadeOnDelete();
+            $table->string('titel');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
