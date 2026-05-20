@@ -1,7 +1,7 @@
 <script module lang="ts">
     export const layout = {
-        title: 'Log in to your account',
-        description: 'Enter your email and password below to log in',
+        title: 'Masuk ke akun Anda',
+        description: 'Masukkan email dan kata sandi Anda di bawah untuk masuk',
     };
 </script>
 
@@ -31,7 +31,7 @@
     } = $props();
 </script>
 
-<AppHead title="Log in" />
+<AppHead title="Masuk" />
 
 {#if status}
     <div class="mb-4 text-center text-sm font-medium text-green-600">
@@ -47,24 +47,24 @@
     {#snippet children({ errors, processing })}
         <div class="grid gap-6">
             <div class="grid gap-2">
-                <Label for="email">Email address</Label>
+                <Label for="email">Alamat Email</Label>
                 <Input
                     id="email"
                     type="email"
                     name="email"
                     required
                     autocomplete="email"
-                    placeholder="email@example.com"
+                    placeholder="email@contoh.com"
                 />
                 <InputError message={errors.email} />
             </div>
 
             <div class="grid gap-2">
                 <div class="flex items-center justify-between">
-                    <Label for="password">Password</Label>
+                    <Label for="password">Kata Sandi</Label>
                     {#if canResetPassword}
                         <TextLink href={request()} class="text-sm">
-                            Forgot password?
+                            Lupa kata sandi?
                         </TextLink>
                     {/if}
                 </div>
@@ -73,7 +73,7 @@
                     name="password"
                     required
                     autocomplete="current-password"
-                    placeholder="Password"
+                    placeholder="Kata Sandi"
                 />
                 <InputError message={errors.password} />
             </div>
@@ -81,25 +81,25 @@
             <div class="flex items-center justify-between">
                 <Label for="remember" class="flex items-center space-x-3">
                     <Checkbox id="remember" name="remember" />
-                    <span>Remember me</span>
+                    <span>Ingat Saya</span>
                 </Label>
             </div>
 
             <Button
                 type="submit"
-                class="mt-4 w-full"
+                class="mt-4 w-full bg-[#7ec335] text-white hover:bg-[#6ba62d]"
                 disabled={processing}
                 data-test="login-button"
             >
                 {#if processing}<Spinner />{/if}
-                Log in
+                Masuk
             </Button>
         </div>
 
         {#if canRegister}
             <div class="text-center text-sm text-muted-foreground">
-                Don't have an account?
-                <TextLink href={register()}>Sign up</TextLink>
+                Belum punya akun?
+                <TextLink href={register()}>Daftar</TextLink>
             </div>
         {/if}
     {/snippet}

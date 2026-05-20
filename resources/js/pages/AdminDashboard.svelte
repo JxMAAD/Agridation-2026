@@ -12,7 +12,7 @@
     }
 </script>
 
-<AppHead title="Dashboard" />
+<AppHead title="Admin Dashboard" />
 
 <div class="p-8">
     <p class="mb-4">Hello {name}!. your role is: {role}.</p>

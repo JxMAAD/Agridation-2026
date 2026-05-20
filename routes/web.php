@@ -39,6 +39,22 @@ Route::inertia('/', 'Welcome', [
     ]
 ])->name('home');
 
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('dashboard', function () {
+        return inertia('Dashboard', [
+            'name' => auth()->user()->name,
+            'role' => auth()->user()->getRoleNames()->first() ?? 'Peserta',
+        ]);
+    })->name('dashboard');
+
+    Route::get('admin/dashboard', function () {
+        return inertia('AdminDashboard', [
+            'name' => auth()->user()->name,
+            'role' => auth()->user()->getRoleNames()->first() ?? 'Admin',
+        ]);
+    })->name('admin.dashboard');
+});
+
 Route::get('/{slug}', function ($slug) {
     $competitions = [
         'business-plan-competition' => [
@@ -143,8 +159,5 @@ Route::get('/{slug}', function ($slug) {
     ]);
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'Dashboard')->name('dashboard');
-});
 
 require __DIR__.'/settings.php';
