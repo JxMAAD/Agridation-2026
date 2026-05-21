@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('scoring_criterias', function (Blueprint $table) {
             $table->id();
             $table->foreignId('competition_id')->constrained()->cascadeOnDelete();
-            $table->string('titel');
+            $table->string('title');
             $table->integer('max_score')->default(100);
             $table->decimal('weight', 5, 2);
             $table->timestamps();
