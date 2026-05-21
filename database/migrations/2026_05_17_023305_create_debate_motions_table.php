@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('debate_motions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('competition_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
             $table->string('title');
             $table->string('slug')->unique();
             $table->longText('description')->nullable();
