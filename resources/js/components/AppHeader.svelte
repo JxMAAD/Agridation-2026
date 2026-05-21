@@ -1,7 +1,5 @@
 <script lang="ts">
     import { Link, page } from '@inertiajs/svelte';
-    import BookOpen from 'lucide-svelte/icons/book-open';
-    import Folder from 'lucide-svelte/icons/folder';
     import LayoutGrid from 'lucide-svelte/icons/layout-grid';
     import Menu from 'lucide-svelte/icons/menu';
     import Search from 'lucide-svelte/icons/search';
@@ -32,12 +30,6 @@
         SheetTitle,
         SheetTrigger,
     } from '@/components/ui/sheet';
-    import {
-        Tooltip,
-        TooltipContent,
-        TooltipProvider,
-        TooltipTrigger,
-    } from '@/components/ui/tooltip';
     import UserMenuContent from '@/components/UserMenuContent.svelte';
     import { currentUrlState } from '@/lib/currentUrl.svelte';
     import { getInitials } from '@/lib/initials';
@@ -53,34 +45,34 @@
 
     const auth = $derived(page.props.auth);
     const url = currentUrlState();
+    const userRole = $derived(auth.user?.roles?.[0]?.name || 'peserta');
 
     const activeItemStyles =
-        'text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100';
+        'text-[#3b5c19] bg-[#f0e2b8]/50';
 
-    const mainNavItems: NavItem[] = [
-        {
-            title: 'Dashboard',
-            href: dashboard(),
-            icon: LayoutGrid,
-        },
-    ];
+    const mainNavItems = $derived.by(() => {
+        const items: NavItem[] = [];
 
-    const rightNavItems: NavItem[] = [
-        {
-            title: 'Repository',
-            href: 'https://github.com/laravel/svelte-starter-kit',
-            icon: Folder,
-        },
-        {
-            title: 'Documentation',
-            href: 'https://laravel.com/docs/starter-kits#svelte',
-            icon: BookOpen,
-        },
-    ];
+        if (userRole === 'admin' || userRole === 'juri') {
+            items.push({
+                title: 'Admin Dashboard',
+                href: '/admin/dashboard',
+                icon: LayoutGrid,
+            });
+        } else {
+            items.push({
+                title: 'Dashboard',
+                href: dashboard(),
+                icon: LayoutGrid,
+            });
+        }
+
+        return items;
+    });
 </script>
 
 <div>
-    <div class="border-b border-sidebar-border/80">
+    <div class="border-b border-sidebar-border/80 bg-white">
         <div class="mx-auto flex h-16 items-center px-4 md:max-w-7xl">
             <!-- Mobile Menu -->
             <div class="lg:hidden">
@@ -102,7 +94,7 @@
                         <SheetTitle class="sr-only">Navigation menu</SheetTitle>
                         <SheetHeader class="flex justify-start text-left">
                             <AppLogoIcon
-                                class="size-6 fill-current text-black dark:text-white"
+                                class="size-6 fill-current text-[#3b5c19]"
                             />
                         </SheetHeader>
                         <div
@@ -126,21 +118,6 @@
                                     </Link>
                                 {/each}
                             </nav>
-                            <div class="flex flex-col space-y-4">
-                                {#each rightNavItems as item (toUrl(item.href))}
-                                    <a
-                                        href={toUrl(item.href)}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        class="flex items-center space-x-2 text-sm font-medium"
-                                    >
-                                        {#if item.icon}
-                                            <item.icon class="h-5 w-5" />
-                                        {/if}
-                                        <span>{item.title}</span>
-                                    </a>
-                                {/each}
-                            </div>
                         </div>
                     </SheetContent>
                 </Sheet>
@@ -166,7 +143,7 @@
                                         url.currentUrl,
                                         activeItemStyles,
                                         '',
-                                    ) ?? ''} h-9 cursor-pointer px-4"
+                                    ) ?? ''} h-9 cursor-pointer px-4 font-semibold text-[#3b5c19]"
                                     href={toUrl(item.href)}
                                 >
                                     {#if item.icon}
@@ -176,7 +153,7 @@
                                 </Link>
                                 {#if url.isCurrentUrl(item.href, url.currentUrl)}
                                     <div
-                                        class="absolute bottom-0 left-0 h-0.5 w-full translate-y-px bg-black dark:bg-white"
+                                        class="absolute bottom-0 left-0 h-0.5 w-full translate-y-px bg-[#3b5c19]"
                                     ></div>
                                 {/if}
                             </NavigationMenuItem>
@@ -196,36 +173,6 @@
                             class="size-5 opacity-80 group-hover:opacity-100"
                         />
                     </Button>
-
-                    <div class="hidden space-x-1 lg:flex">
-                        {#each rightNavItems as item (toUrl(item.href))}
-                            <TooltipProvider delayDuration={0}>
-                                <Tooltip>
-                                    <TooltipTrigger>
-                                        {#snippet child({ props })}
-                                            <a
-                                                href={toUrl(item.href)}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                {...props}
-                                                class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 w-9 group cursor-pointer"
-                                            >
-                                                <span class="sr-only"
-                                                    >{item.title}</span
-                                                >
-                                                <item.icon
-                                                    class="size-5 opacity-80 group-hover:opacity-100"
-                                                />
-                                            </a>
-                                        {/snippet}
-                                    </TooltipTrigger>
-                                    <TooltipContent>
-                                        <p>{item.title}</p>
-                                    </TooltipContent>
-                                </Tooltip>
-                            </TooltipProvider>
-                        {/each}
-                    </div>
                 </div>
 
                 <DropdownMenu>
@@ -249,7 +196,7 @@
                                         />
                                     {/if}
                                     <AvatarFallback
-                                        class="rounded-lg bg-neutral-200 font-semibold text-black dark:bg-neutral-700 dark:text-white"
+                                        class="rounded-lg bg-[#f0e2b8] font-semibold text-[#3b5c19]"
                                     >
                                         {getInitials(auth.user?.name ?? '')}
                                     </AvatarFallback>
@@ -268,7 +215,7 @@
     </div>
 
     {#if breadcrumbs.length > 1}
-        <div class="flex w-full border-b border-sidebar-border/70">
+        <div class="flex w-full border-b border-sidebar-border/70 bg-[#fcfcfc]">
             <div
                 class="mx-auto flex h-12 w-full items-center justify-start px-4 text-neutral-500 md:max-w-7xl"
             >

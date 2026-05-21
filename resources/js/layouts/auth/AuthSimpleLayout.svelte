@@ -16,7 +16,7 @@
 </script>
 
 <div
-    class="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10"
+    class="flex min-h-svh flex-col items-center justify-center gap-6 bg-[#f8f5e9] p-6 md:p-10"
 >
     <div class="w-full max-w-sm">
         <div class="flex flex-col gap-8">
@@ -26,10 +26,12 @@
                     class="flex flex-col items-center gap-2 font-medium"
                 >
                     <div
-                        class="mb-1 flex h-9 w-9 items-center justify-center rounded-md"
+                        class="mb-1 flex h-16 w-auto items-center justify-center"
                     >
-                        <AppLogoIcon
-                            class="size-9 fill-current text-(--foreground) dark:text-white"
+                        <img
+                            src="/logo/logo_agridation.png"
+                            alt="Agridation Logo"
+                            class="h-16 w-auto"
                         />
                     </div>
                     <span class="sr-only">{title}</span>
