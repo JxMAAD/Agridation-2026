@@ -1,8 +1,8 @@
 <script lang="ts">
     import { Link } from '@inertiajs/svelte';
+    import { Sprout, ArrowRight, MousePointerClick } from 'lucide-svelte';
     import { toUrl } from '@/lib/utils';
     import { register } from '@/routes';
-    import { Sprout, ArrowRight, MousePointerClick } from 'lucide-svelte';
 </script>
 
 <section class="relative overflow-hidden bg-[#FDFDFC] pt-16 pb-24 lg:pt-32 lg:pb-40">

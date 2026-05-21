@@ -1,9 +1,9 @@
 <script lang="ts">
     import { Link, page } from '@inertiajs/svelte';
+    import { LogIn, UserPlus, LayoutDashboard } from 'lucide-svelte';
+    import AppLogo from '@/components/AppLogo.svelte';
     import { toUrl } from '@/lib/utils';
     import { login, register, dashboard } from '@/routes';
-    import AppLogo from '@/components/AppLogo.svelte';
-    import { LogIn, UserPlus, LayoutDashboard } from 'lucide-svelte';
 
     const auth = $derived(page.props.auth);
 </script>

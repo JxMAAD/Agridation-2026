@@ -15,6 +15,7 @@
 
         if (distance < 0) {
             clearInterval(interval);
+
             return;
         }
 

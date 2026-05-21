@@ -1,11 +1,9 @@
 <script lang="ts">
     import { Link } from '@inertiajs/svelte';
-    import BookOpen from 'lucide-svelte/icons/book-open';
-    import FolderGit2 from 'lucide-svelte/icons/folder-git-2';
+    import { page } from '@inertiajs/svelte';
     import LayoutGrid from 'lucide-svelte/icons/layout-grid';
     import type { Snippet } from 'svelte';
     import AppLogo from '@/components/AppLogo.svelte';
-    import NavFooter from '@/components/NavFooter.svelte';
     import NavMain from '@/components/NavMain.svelte';
     import NavUser from '@/components/NavUser.svelte';
     import {
@@ -27,26 +25,28 @@
         children?: Snippet;
     } = $props();
 
-    const mainNavItems: NavItem[] = [
-        {
-            title: 'Dashboard',
-            href: dashboard(),
-            icon: LayoutGrid,
-        },
-    ];
+    const user = $derived(page.props.auth.user);
+    const userRole = $derived(user?.roles?.[0]?.name || 'peserta');
 
-    const footerNavItems: NavItem[] = [
-        {
-            title: 'Repository',
-            href: 'https://github.com/laravel/svelte-starter-kit',
-            icon: FolderGit2,
-        },
-        {
-            title: 'Documentation',
-            href: 'https://laravel.com/docs/starter-kits#svelte',
-            icon: BookOpen,
-        },
-    ];
+    const mainNavItems = $derived.by(() => {
+        const items: NavItem[] = [];
+
+        if (userRole === 'admin' || userRole === 'juri') {
+            items.push({
+                title: 'Admin Dashboard',
+                href: '/admin/dashboard',
+                icon: LayoutGrid,
+            });
+        } else {
+            items.push({
+                title: 'Dashboard',
+                href: dashboard(),
+                icon: LayoutGrid,
+            });
+        }
+
+        return items;
+    });
 </script>
 
 <Sidebar collapsible="icon" variant="inset">
@@ -73,7 +73,6 @@
     </SidebarContent>
 
     <SidebarFooter>
-        <NavFooter items={footerNavItems} />
         <NavUser />
     </SidebarFooter>
 </Sidebar>

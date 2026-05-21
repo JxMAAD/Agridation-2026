@@ -1,9 +1,5 @@
 <script lang="ts">
-    import AppHead from '@/components/AppHead.svelte';
-    import Navbar from '@/components/Landing/Navbar.svelte';
     import { Link } from '@inertiajs/svelte';
-    import { toUrl } from '@/lib/utils';
-    import { register } from '@/routes';
     import { 
         Calendar, 
         BookOpen, 
@@ -13,6 +9,10 @@
         ArrowLeft,
         Target
     } from 'lucide-svelte';
+    import AppHead from '@/components/AppHead.svelte';
+    import Navbar from '@/components/Landing/Navbar.svelte';
+    import { toUrl } from '@/lib/utils';
+    import { register } from '@/routes';
 
     let {
         competition,

@@ -47,12 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ]);
     })->name('dashboard');
 
-    Route::get('admin/dashboard', function () {
-        return inertia('AdminDashboard', [
-            'name' => auth()->user()->name,
-            'role' => auth()->user()->getRoleNames()->first() ?? 'Admin',
-        ]);
-    })->name('admin.dashboard');
+    Route::get('admin/dashboard', [\App\Http\Controllers\AdminDashboardController::class, 'index'])->name('admin.dashboard');
 });
 
 Route::get('/{slug}', function ($slug) {
