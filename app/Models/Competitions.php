@@ -42,6 +42,11 @@ class Competitions extends Model
                     : $slug;
             }
         });
+
+        static::saving(function ($competition) {
+
+            $competition->code = strtoupper($competition->code);
+        });
     }
 
     protected $casts = [
